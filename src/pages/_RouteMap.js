@@ -4,6 +4,10 @@ import Loadable from 'react-loadable';
 
 import Loader from '../components/common/Loader';
 
+const Login = Loadable({
+    loader: () => import('./Login'),
+    loading: Loader
+});
 const Home = Loadable({
     loader: () => import('./Home'),
     loading: Loader
@@ -30,5 +34,11 @@ const RouteMap = () => (
         <Route path="/comment" component={Comment} />
     </React.Fragment>
 );
+const SimpleRouteMap = () => (
+    <React.Fragment>
+        <Route path="/login" component={Login} />
+    </React.Fragment>
+);
 
-export default RouteMap;
+export default { RouteMap, SimpleRouteMap };
+
