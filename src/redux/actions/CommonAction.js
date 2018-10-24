@@ -23,7 +23,7 @@ export const toggleSliderStatus = () => ({
 });
 
 // 登陆
-export const login = user => ({
+export const initUser = user => ({
     type: CommonActionTypes.LOGIN,
     user
 });

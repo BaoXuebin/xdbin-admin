@@ -2,7 +2,7 @@ import { CommonActionTypes } from '../actions/CommonAction';
 import { get, put } from '../../utils/Storage';
 
 const initState = {
-    user: {},
+    user: {userId:"BaoXuebin",userName:"包学斌",token:"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJCYW9YdWViaW4iLCJjcmVhdGVkIjoxNTQwMzkwMTg0NDIxLCJleHAiOjE1NDAzOTM3ODR9.-EcyTMW0K-Di_625LNKV7vdXuySLbQMc86FcfRxVMAw"},
     path: '',
     query: '',
     collapsed: get('_collapsed') || false

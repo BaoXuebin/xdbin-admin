@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { initMatchPath } from '../redux/actions/CommonAction';
-import { href } from '../api/Req';
 
 const mapDispatchToProps = dispatch => ({
     initMatchPath: bindActionCreators(initMatchPath, dispatch)

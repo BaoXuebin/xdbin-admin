@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import Loadable from 'react-loadable';
 
 import Loader from '../components/common/Loader';
-import LayoutWrapper from '../containers/base/LayoutWrapper';
 import AuthRoute from '../components/common/AuthRoute';
 
 const Login = Loadable({
