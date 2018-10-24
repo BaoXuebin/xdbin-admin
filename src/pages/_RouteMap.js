@@ -1,8 +1,10 @@
 import React from 'react';
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Loadable from 'react-loadable';
 
 import Loader from '../components/common/Loader';
+import LayoutWrapper from '../containers/base/LayoutWrapper';
+import AuthRoute from '../components/common/AuthRoute';
 
 const Login = Loadable({
     loader: () => import('./Login'),
@@ -24,21 +26,24 @@ const Comment = Loadable({
     loader: () => import('./Comment'),
     loading: Loader
 });
+const NoFound = Loadable({
+    loader: () => import('./404'),
+    loading: Loader
+});
 
 const RouteMap = () => (
     <React.Fragment>
-        <Route exact path="/" component={Home} />
-        <Route path="/home" component={Home} />
-        <Route path="/article" component={Article} />
-        <Route path="/tag" component={Tag} />
-        <Route path="/comment" component={Comment} />
-    </React.Fragment>
-);
-const SimpleRouteMap = () => (
-    <React.Fragment>
-        <Route path="/login" component={Login} />
+        <Switch>
+            <Route path="/login" component={Login} />   
+            <AuthRoute exact path="/" component={Home} />
+            <AuthRoute path="/home" component={Home} />
+            <Route path="/article" component={Article} />
+            <Route path="/tag" component={Tag} />
+            <Route path="/comment" component={Comment} />
+            <Route component={NoFound} />
+        </Switch>
     </React.Fragment>
 );
 
-export default { RouteMap, SimpleRouteMap };
+export default RouteMap;
 
