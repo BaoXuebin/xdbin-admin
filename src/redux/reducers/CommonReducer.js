@@ -2,6 +2,7 @@ import { CommonActionTypes } from '../actions/CommonAction';
 import { get, put } from '../../utils/Storage';
 
 const initState = {
+    user: {},
     path: '',
     query: '',
     collapsed: get('_collapsed') || false
@@ -14,6 +15,9 @@ const CommonReducer = (state = initState, action) => {
         case CommonActionTypes.TOGGLE_SLIDER_STATUS: {
             put('_collapsed', !state.collapsed);
             return { ...state, collapsed: !state.collapsed };
+        }
+        case CommonActionTypes.LOGIN: {
+            return { ...state, user: action.user };
         }
         default:
             return state;

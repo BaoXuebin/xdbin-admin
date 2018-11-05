@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Wrapper from './_Wrapper';
 
-class Module1 extends Component {
+class Home extends Component {
     render() {
         return (
-            <p>模块一</p>
+            <p>首页</p>
         );
     }
 }
 
-export default Wrapper(Module1);
+export default Wrapper(Home);

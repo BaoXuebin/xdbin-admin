@@ -4,12 +4,10 @@ import { Breadcrumb } from 'antd';
 import { Link } from 'react-router-dom';
 
 const pathMap = {
-    'module1': '模块一',
-    'module2': '模块二',
-    'module3': '模块三',
-    'sub1': '子模块一',
-    'sub2': '子模块二',
-    'sub3': '子模块三'
+    'home': '首页',
+    'tag': '标签管理',
+    'article': '文章管理',
+    'comment': '留言管理'
 };
 
 const itemRender = (route, params, routes, paths) => {

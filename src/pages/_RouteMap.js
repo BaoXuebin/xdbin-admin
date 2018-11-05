@@ -1,39 +1,48 @@
 import React from 'react';
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Loadable from 'react-loadable';
 
 import Loader from '../components/common/Loader';
+import AuthRoute from '../components/common/AuthRoute';
 
-const Module1 = Loadable({
-    loader: () => import('./Module1'),
+const Login = Loadable({
+    loader: () => import('./Login'),
     loading: Loader
 });
-const Sub1 = Loadable({
-    loader: () => import('./Module2/Sub1'),
+const Home = Loadable({
+    loader: () => import('./Home'),
     loading: Loader
 });
-const Sub2 = Loadable({
-    loader: () => import('./Module2/Sub2'),
+const Article = Loadable({
+    loader: () => import('./Article'),
     loading: Loader
 });
-const Sub3 = Loadable({
-    loader: () => import('./Module2/Sub3'),
+const Tag = Loadable({
+    loader: () => import('./Tag'),
     loading: Loader
 });
-const Module3 = Loadable({
-    loader: () => import('./Module3'),
+const Comment = Loadable({
+    loader: () => import('./Comment'),
+    loading: Loader
+});
+const NoFound = Loadable({
+    loader: () => import('./404'),
     loading: Loader
 });
 
 const RouteMap = () => (
     <React.Fragment>
-        <Route exact path="/" component={Module1} />
-        <Route path="/module1" component={Module1} />
-        <Route path="/module2/sub1" component={Sub1} />
-        <Route path="/module2/sub2" component={Sub2} />
-        <Route path="/module2/sub3" component={Sub3} />
-        <Route path="/module3" component={Module3} />
+        <Switch>
+            <Route path="/login" component={Login} />   
+            <AuthRoute exact path="/" component={Home} />
+            <AuthRoute path="/home" component={Home} />
+            <Route path="/article" component={Article} />
+            <Route path="/tag" component={Tag} />
+            <Route path="/comment" component={Comment} />
+            <Route component={NoFound} />
+        </Switch>
     </React.Fragment>
 );
 
 export default RouteMap;
+
