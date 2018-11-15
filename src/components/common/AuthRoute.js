@@ -30,7 +30,6 @@ class AuthRoute extends Component {
 
     render() {
         const { component: Component, ...rest } = this.props;
-        console.log(this.user);
         return (
             <Route
                 {...rest}

@@ -2,7 +2,8 @@
   "name": "xdbin-admin",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://api.xdbin.com/v1",
+  "proxy": "https://admin.xdbin.com",
+  "homepage": "https://admin.xdbin.com",
   "theme": {
     "primary-color": "#1DA57A"
   },
@@ -20,7 +21,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build && mv build ../admin-deploy",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
