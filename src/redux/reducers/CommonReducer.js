@@ -2,7 +2,7 @@ import { CommonActionTypes } from '../actions/CommonAction';
 import { get, put } from '../../utils/Storage';
 
 const initState = {
-    user: {},
+    user: null,
     path: '',
     query: '',
     collapsed: get('_collapsed') || false
