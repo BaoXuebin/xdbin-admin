@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "https://api.xdbin.com/v1",
+  "homepage": "https://admin.xdbin.com",
   "theme": {
     "primary-color": "#1DA57A"
   },
