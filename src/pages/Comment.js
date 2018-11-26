@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import Wrapper from './_Wrapper';
 import { Card, Timeline } from 'antd';
+
+import Wrapper from './_Wrapper';
 import { fetchAllComment, deleteComment } from '../api/CommentReq';
 import TimelineItem from '../components/comment/TimelineItem';
+import Loader from '../components/common/Loader';
 
 class Comment extends Component {
     state = {
@@ -28,6 +30,7 @@ class Comment extends Component {
     };
 
     async componentDidMount() {
+        this.setState({ loading: true });
         await fetchAllComment(this.state.pageNo)
             .then((result) => {
                 const { content, pageNo, total, last } = result;
@@ -38,13 +41,17 @@ class Comment extends Component {
                     last
                 });
             })
-            .catch((error) => { console.log(error); });
+            .catch((error) => { console.log(error); })
+            .finally(() => { this.setState({ loading: false }); });
     }
 
     render() {
-        const { comments } = this.state;
+        const { comments, loading } = this.state;
         return (
             <Card>
+                {
+                    loading && <Loader />
+                }
                 <Timeline>
                     {
                         comments.map(comment =>
