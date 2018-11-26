@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Wrapper from '../_Wrapper';
 
-class Module1 extends Component {
+class Mood extends Component {
     render() {
         return (
-            <p>子模块一</p>
+            <p>只言片语</p>
         );
     }
 }
 
-export default Wrapper(Module1);
+export default Wrapper(Mood);
