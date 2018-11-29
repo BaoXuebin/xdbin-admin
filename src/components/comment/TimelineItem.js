@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Popover, Modal } from 'antd';
+import { Popover, Modal, Input } from 'antd';
 
 import Config from '../../config/Config';
 import './styles/TimelineItem.less';
 
 const confirm = Modal.confirm;
+const TextArea = Input.TextArea;
 
 const TextButtonStyle = {
     color: Config.theme
@@ -27,11 +28,26 @@ const Time = ({ time }) => (
 
 class TimelineItem extends Component {
 
+    state = {
+        reply: false
+    };
+
     handleReply = () => {
-        this.props.onReply({
-            replyId: this.props.comment.id,
-            content: 'ssss'
-        });
+        const content = this.comment.textAreaRef.value;
+        if (content !== '') {
+            this.props.onReply({
+                replyId: this.props.comment.id, content
+            });
+        }
+        this.setState({ reply: false });
+    };
+
+    handleOpenReplyInput = () => {
+        this.setState({ reply: true });
+    };
+
+    handleCloseReplyInput = () => {
+        this.setState({ reply: false });
     };
 
     handleDelete = () => {
@@ -64,9 +80,17 @@ class TimelineItem extends Component {
                 { comment.content }
                 <div style={{ marginTop: '.5rem' }}>
                     <Time time={ comment.publishTime } />
-                    <TextButton content="回复" onClick={this.handleReply} />
+                    <TextButton content="回复" onClick={this.handleOpenReplyInput} />
                     <TextButton content="删除" onClick={this.handleDelete} />
                 </div>
+                {
+                    this.state.reply &&
+                    <div style={{ marginTop: '.5rem', maxWidth: '500px', textAlign: 'right' }}>
+                        <TextArea autosize ref={(comment) => { this.comment = comment; }} />
+                        <TextButton content="取消" onClick={this.handleCloseReplyInput} />
+                        <TextButton content="发送" onClick={this.handleReply} />
+                    </div>
+                }
             </div>
         );
     }
