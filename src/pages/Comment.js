@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, Timeline } from 'antd';
 
 import Wrapper from './_Wrapper';
-import { fetchAllComment, deleteComment } from '../api/CommentReq';
+import { fetchAllComment, saveComment, deleteComment } from '../api/CommentReq';
 import TimelineItem from '../components/comment/TimelineItem';
 import Loader from '../components/common/Loader';
 
@@ -15,8 +15,13 @@ class Comment extends Component {
         loading: false
     };
 
-    handleReply = ({ replyId, content }) => {
-        console.log(replyId, content);
+    handleReply = ({ origin, replyId, title, content }) => {
+        saveComment({ origin, replyId, content })
+            .then((comment) => {
+                comment.title = title;
+                this.setState({ comments: [comment, ...this.state.comments] });
+            })
+            .catch((err) => { console.error(err); });
     };
 
     handleDelete = commentId => {
@@ -27,7 +32,7 @@ class Comment extends Component {
                 });
             })
             .catch((error) => { console.error(error); });
-    };
+    }; 
 
     async componentDidMount() {
         this.setState({ loading: true });

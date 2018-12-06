@@ -36,7 +36,10 @@ class TimelineItem extends Component {
         const content = this.comment.textAreaRef.value;
         if (content !== '') {
             this.props.onReply({
-                replyId: this.props.comment.id, content
+                replyId: this.props.comment.id,
+                content,
+                title: this.props.comment.title,
+                origin: this.props.comment.origin
             });
         }
         this.setState({ reply: false });
