@@ -2,13 +2,13 @@
   "name": "react-template",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://admin.xdbin.com",
+  "proxy": "http://localhost:8080",
   "homepage": "https://admin.xdbin.com",
   "theme": {
     "primary-color": "#1DA57A"
   },
   "dependencies": {
-    "antd": "^3.6.5",
+    "antd": "^3.11.2",
     "moment": "^2.22.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
