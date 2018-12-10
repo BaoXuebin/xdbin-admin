@@ -22,6 +22,23 @@ export default [
         icon: 'message',
         content: '留言管理',
         link: '/comment'
+    },
+    {
+        key: 'appstore',
+        icon: 'appstore',
+        content: '更多应用',
+        subMenu: [
+            {
+                key: 'ext/video',
+                content: '短片管理',
+                link: '/ext/video'
+            },
+            {
+                key: 'ext/mood',
+                content: '时间轴',
+                link: '/ext/mood'
+            }
+        ]
     }
     // {
     //     key: 'module2',
