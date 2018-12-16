@@ -32,7 +32,6 @@ class Mood extends Component {
     }
 
     render() {
-        console.log(this.state.moods);
         const { loading, moods, total } = this.state;
         return (
             <Card>

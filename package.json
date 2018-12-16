@@ -10,6 +10,7 @@
   "dependencies": {
     "antd": "^3.11.2",
     "moment": "^2.22.2",
+    "qiniu-js": "^2.5.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-flexbox-grid": "^2.1.2",
