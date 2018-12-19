@@ -10,7 +10,8 @@ const pathMap = {
     'comment': '留言管理',
     'video': '短片管理',
     'ext': '扩展',
-    'mood': '时间轴'
+    'mood': '时间轴',
+    'book': '我的书籍',
 };
 
 const itemRender = (route, params, routes, paths) => {

@@ -29,6 +29,11 @@ export default [
         content: '更多应用',
         subMenu: [
             {
+                key: 'ext/book',
+                content: '我的书籍',
+                link: '/ext/book'
+            },
+            {
                 key: 'ext/video',
                 content: '短片管理',
                 link: '/ext/video'
