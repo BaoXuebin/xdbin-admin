@@ -37,6 +37,10 @@ const Book = Loadable({
     loader: () => import('./ext/Book'),
     loading: Loader
 });
+const BookDetail = Loadable({
+    loader: () => import('./ext/book/Detail'),
+    loading: Loader
+});
 const NoFound = Loadable({
     loader: () => import('./404'),
     loading: Loader
@@ -53,7 +57,8 @@ const RouteMap = () => (
             <AuthRoute path="/comment" component={Comment} />
             <AuthRoute path="/ext/video" component={Video} />
             <AuthRoute path="/ext/mood" component={Mood} />
-            <AuthRoute path="/ext/book" component={Book} />
+            <AuthRoute exact path="/ext/book" component={Book} />
+            <AuthRoute path="/ext/book/:bookId" component={BookDetail} />
             <AuthRoute component={NoFound} />
         </Switch>
     </React.Fragment>

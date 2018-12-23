@@ -20,11 +20,15 @@ const itemRender = (route, params, routes, paths) => {
 };
 
 const mapStateToProps = state => ({
-    path: state.common.path
+    path: state.common.path,
+    breadcrumbName: state.common.breadcrumbName
 });
 
-export default connect(mapStateToProps, null)(({ path }) => {
+export default connect(mapStateToProps, null)(({ path, breadcrumbName }) => {
     const paths = path.split('/').filter(s => s);
+    if (breadcrumbName) {
+        paths[paths.length - 1] = breadcrumbName;
+    }
     const routes = paths.map(p => ({ path: p, breadcrumbName: pathMap[p] || p }));
     return (
         <Breadcrumb itemRender={itemRender} routes={routes}/>

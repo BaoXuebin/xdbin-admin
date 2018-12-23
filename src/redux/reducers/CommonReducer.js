@@ -5,6 +5,7 @@ const initState = {
     user: null,
     path: '',
     query: '',
+    breadcrumbName: '海边的卡夫卡',
     collapsed: get('_collapsed') || false
 };
 
@@ -18,6 +19,9 @@ const CommonReducer = (state = initState, action) => {
         }
         case CommonActionTypes.LOGIN: {
             return { ...state, user: action.user };
+        }
+        case CommonActionTypes.SET_BREADCRUME: {
+            return { ...state, breadcrumbName: action.breadcrumbName };
         }
         default:
             return state;
