@@ -21,7 +21,6 @@ class Book extends Component {
     handleBookReq = ({ pageNo, pageSize }) => {
         fetchBooks({ pageNo, pageSize })
             .then((res) => {
-                console.log(res);
                 const { content, last, pageNo, pageSize, total } = res;
                 this.setState({ pageNo, pageSize, total, last, books: content });
             })
@@ -36,9 +35,9 @@ class Book extends Component {
         this.setState({ inputModalVisible: false });
     };
 
-    handleInputNewBook = (book) => {
+    handleInputNewBook = book => {
         message.success('添加成功');
-        this.setState({ inputModalVisible: false });
+        this.setState({ inputModalVisible: false, books: [book, ...this.state.books.slice(0, 10)] });
     };
 
     handleChangePage = (pageNo, pageSize) => {
@@ -81,7 +80,7 @@ class Book extends Component {
                                             <Icon type="delete" />
                                         ]}
                                     >
-                                        <p>{book.title}</p>
+                                        <p title={book.title} className="book-card-title">{book.title}</p>
                                         <Progress percent={book.progress || 0} size="small" />
                                     </Card>
                                 </Col>
