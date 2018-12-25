@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import Wrapper from '../_Wrapper';
 import { Link } from 'react-router-dom';
-import { Card, Button, message, Popover, Icon, Progress, Pagination } from 'antd';
+import { Card, Button, message, Popover, Icon, Progress, Pagination, Modal } from 'antd';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import InputBookModal from '../../containers/ext/book/InputBookModal';
-import { fetchBooks } from '../../api/BookReq';
+import { fetchBooks, deleteBook } from '../../api/BookReq';
 import './style/Book.less';
+
+const confirm = Modal.confirm;
 class Book extends Component {
     state = {
         inputModalVisible: false,
@@ -37,11 +39,37 @@ class Book extends Component {
 
     handleInputNewBook = book => {
         message.success('添加成功');
-        this.setState({ inputModalVisible: false, books: [book, ...this.state.books.slice(0, 10)] });
+        this.setState({ inputModalVisible: false, books: [book, ...this.state.books.slice(0, 11)], total: this.state.total + 1 });
     };
 
     handleChangePage = (pageNo, pageSize) => {
         this.handleBookReq({ pageNo, pageSize });
+    };
+
+    deleteBookReq = (bookId) => {
+        deleteBook(bookId)
+            .then((book) => {
+                this.setState({ books: [...this.state.books.filter(b => b.id !== book.id)], total: this.state.total - 1 });
+            })
+            .catch(this.handleReqError);
+    };
+
+    handleDeleteBook = (bookId, title) => {
+        const _this = this;
+        confirm({
+            title: '确定删除?',
+            content: title,
+            okText: '删除',
+            okType: 'danger',
+            okButtonProps: {
+                disabled: false,
+            },
+            cancelText: '取消',
+            onOk() {
+                _this.deleteBookReq(bookId);
+            },
+            onCancel() {}
+        });
     };
 
     componentDidMount() {
@@ -76,8 +104,7 @@ class Book extends Component {
                                             ]}>
                                                 <Icon type="info-circle" />
                                             </Popover>,
-                                            <Icon type="edit" />,
-                                            <Icon type="delete" />
+                                            <Icon type="delete" onClick={() => { this.handleDeleteBook(book.id, book.title); }} />
                                         ]}
                                     >
                                         <p title={book.title} className="book-card-title">{book.title}</p>

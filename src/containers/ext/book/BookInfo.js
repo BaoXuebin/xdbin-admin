@@ -1,10 +1,12 @@
 import React from 'react';
+import { Button } from 'antd';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Progress } from 'antd';
 
 import './style/BookInfo.less';
 
-const BookInfo = ({ book }) => (
+const ButtonGroup = Button.Group;
+const BookInfo = ({ book, onMinusProgress, onPlusProgress }) => (
     <Grid fluid className="ins">
         <Row>
             <h2>{book.title}</h2>
@@ -31,6 +33,12 @@ const BookInfo = ({ book }) => (
             <Col xs={3} style={{ marginTop: '2rem', textAlign: 'center' }}>
                 <Progress type="circle" percent={book.progress || 0} strokeWidth={10} strokeColor="green" />
                 <p style={{ marginTop: '1rem' }}>阅读进度</p>
+                <div>
+                    <ButtonGroup>
+                        <Button icon="minus" onClick={onMinusProgress} />
+                        <Button icon="plus" onClick={onPlusProgress} />
+                    </ButtonGroup>
+                </div>
             </Col>
         </Row>
         <Row>

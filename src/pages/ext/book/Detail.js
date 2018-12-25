@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
 import Wrapper from '../../_Wrapper';
-import { fetchBookById } from '../../../api/BookReq';
+import { fetchBookById, updateReadProgress } from '../../../api/BookReq';
 import BookInfo from '../../../containers/ext/book/BookInfo';
 import Loader from '../../../components/common/Loader';
 import BookComment from '../../../containers/ext/book/BookComment';
@@ -28,6 +28,23 @@ class Detail extends Component {
             .finally(() => { this.setState({ loading: false }); });
     };
 
+    handleUpdateProgressReq = (progress) => {
+        updateReadProgress(this.state.book.id, progress)
+            .then((bookProgress) => {
+                if (bookProgress.status > 200) { this.handleReqError('Error update progress.'); }
+                this.setState({ book: Object.assign(this.state.book, { progress: bookProgress.progress }) });
+            })
+            .catch(this.handleReqError);
+    };
+
+    handleMinusProgress = () => {
+        this.handleUpdateProgressReq(this.state.book.progress - 1);
+    };
+
+    handlePlusProgress = () => {
+        this.handleUpdateProgressReq(this.state.book.progress + 1);
+    };
+
     componentDidMount() {
         this.handleReqBook();
     }
@@ -40,7 +57,7 @@ class Detail extends Component {
         return (
             <Card>
                 <div style={{ maxWidth: '1000px' }}>
-                    <BookInfo book={book} />
+                    <BookInfo book={book} onMinusProgress={this.handleMinusProgress} onPlusProgress={this.handlePlusProgress} />
                     <div style={{ height: '10px' }} />
                     <BookComment bookId={this.bookId} />
                 </div>

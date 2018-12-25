@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input, message, Button } from 'antd';
+import { Modal, Form, Input, message, Button, Switch } from 'antd';
 
 import { fetchBookByISBN, saveBook } from '../../../api/BookReq';
 
@@ -19,7 +19,8 @@ const formItemLayout = {
 class InputBookModal extends Component {
 
     state = {
-        loading: false
+        loading: false,
+        pub: true
     };
 
     handleQueryByISBN = () => {
@@ -44,15 +45,21 @@ class InputBookModal extends Component {
 
     handleInputNewBook = () => {
         const { isbn, title, subTitle, publisher, publishDate,
-            pages, price, summary, image, doubanLink } = this.state;
+            pages, price, summary, image, doubanLink, pub } = this.state;
         saveBook({
             isbn, title, subTitle, publisher, pages, price, summary, image, doubanLink,
             publishDate,
             authors: this.state.author,
             translators: this.state.translator,
-            tagGroup: this.state.tags
+            tagGroup: this.state.tags,
+            pub: pub ? 1 : 0
         })
             .then((res) => {
+                console.log(res);
+                if (res.status > 200) {
+                    message.error('保存失败');
+                    return;
+                }
                 if (res.code && res.code !== 200) {
                     message.error(res.error);
                     return;
@@ -115,6 +122,10 @@ class InputBookModal extends Component {
         this.setState({ doubanLink: e.target.value });
     };
 
+    handleTogglePub = (pub) => {
+        this.setState({ pub });
+    };
+
     handleClear = () => {
         this.setState({
             isbn: '',
@@ -129,13 +140,14 @@ class InputBookModal extends Component {
             price: '',
             summary: '',
             image: '',
-            doubanLink: ''
+            doubanLink: '',
+            pub: true
         });
     };
 
     render() {
         const { isbn, title, subTitle, author, translator, tags, publisher, publishDate,
-                pages, price, summary, image, doubanLink, loading } = this.state;
+                pages, price, summary, image, doubanLink, loading, pub } = this.state;
         return (
             <Modal
                 title="录入图书"
@@ -223,6 +235,12 @@ class InputBookModal extends Component {
                         label="豆瓣链接"
                     >
                         <Input placeholder="豆瓣链接" value={doubanLink} onChange={this.handleChangeDoubanLink} />
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="公开"
+                    >
+                        <Switch checked={pub} onChange={this.handleTogglePub} />
                     </FormItem>
                 </Form>
             </Modal>

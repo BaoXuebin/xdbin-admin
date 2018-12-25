@@ -1,19 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Collapse, Row, Col, Button, Icon } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { fetchCommentsByBookId, deleteComment } from '../../../api/BookReq';
 import Loader from '../../../components/common/Loader';
 import './style/BookComment.less';
 import PublishBookCommentModal from './PublishBookCommentModal';
 import BookCommentTimeline from './BookCommentTimeline';
-
-const Panel = Collapse.Panel;
-const text = (
-    <p style={{ paddingLeft: 24 }}>
-      A dog is a type of domesticated animal.
-      Known for its loyalty and faithfulness,
-      it can be found as a welcome guest in many households across the world.
-    </p>
-  );
 
 const ButtonGroup = Button.Group;
 
@@ -36,7 +27,6 @@ class BookComment extends Component {
             .then((res) => {
                 const { last, total, pageNo, pageSize, content } = res;
                 this.setState({ last, total, pageNo, pageSize, comments: content });
-                console.log(res);
             })
             .catch(this.handleReqError)
             .finally(() => { this.setState({ loading: false }); });
