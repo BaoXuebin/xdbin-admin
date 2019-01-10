@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Pagination } from 'antd';
 import { fetchCommentsByBookId, deleteComment } from '../../../api/BookReq';
 import Loader from '../../../components/common/Loader';
 import './style/BookComment.less';
@@ -20,10 +20,10 @@ class BookComment extends Component {
         visible: false
     };
 
-    handleReqComment = () => {
+    handleReqComment = (pageNo, pageSize) => {
         this.setState({ loading: true });
         const { bookId } = this.props;
-        fetchCommentsByBookId(bookId)
+        fetchCommentsByBookId(bookId, { pageNo, pageSize })
             .then((res) => {
                 const { last, total, pageNo, pageSize, content } = res;
                 this.setState({ last, total, pageNo, pageSize, comments: content });
@@ -40,8 +40,13 @@ class BookComment extends Component {
         this.setState({ visible: false });
     };
 
+    handleChangePage = (pageNo, pageSize) => {
+        this.handleReqComment(pageNo, pageSize);
+    };
+
     componentDidMount() {
-        this.handleReqComment();
+        const { pageNo, pageSize } = this.state;
+        this.handleReqComment(pageNo, pageSize);
     }
 
     handlePublish = (comment) => {
@@ -64,7 +69,7 @@ class BookComment extends Component {
     };
 
     render() {
-        const { loading, total, visible, comments } = this.state;
+        const { loading, total, visible, comments, pageNo, pageSize } = this.state;
         let _html = '';
         if (loading) {
             _html = <Loader isLoading={loading} text="笔记加载中" />;
@@ -89,6 +94,9 @@ class BookComment extends Component {
                 </Row>
                 <div style={{ height: '10px' }} />
                 { _html }
+                <Row>
+                    <Pagination showTotal={total => `共 ${total} 条`} defaultCurrent={pageNo} defaultPageSize={pageSize} total={total} onChange={this.handleChangePage} />
+                </Row>
                 <PublishBookCommentModal bookId={this.props.bookId} visible={visible} onCancel={this.handleCloseModal} onPublish={this.handlePublish} />
             </Fragment>
         );
