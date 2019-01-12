@@ -63,7 +63,6 @@ class BookCommentTimeline extends Component {
                                 { comment.comment }
                                 <div style={{ marginTop: '.5rem' }}>
                                     <Time time={ comment.publishTime } />
-                                    <TextButton content="修改" onClick={this.handleUpdate} />
                                     <TextButton content="删除" onClick={() => { this.handleDelete(comment.id, comment.comment); }} />
                                 </div>
                             </div>

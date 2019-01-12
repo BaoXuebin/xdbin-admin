@@ -22,7 +22,7 @@ export const saveBook = book => fetch(`/api/v1/book`, {
     body: JSON.stringify(book)
 });
 export const deleteBook = bookId => fetch(`/api/v1/book/${bookId}`, { method: 'delete' });
-export const fetchCommentsByBookId = bookId => fetch(`/api/v1/book/${bookId}/comment`);
+export const fetchCommentsByBookId = (bookId, condition) => fetch(`/api/v1/book/${bookId}/comment?${flatCondition(condition)}`);
 export const saveOrUpdateComment = comment => fetch(`/api/v1/book/comment`, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },

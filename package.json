@@ -2,7 +2,7 @@
   "name": "react-template",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://xdbin.com/",
+  "proxy": "https://xdbin.com",
   "homepage": "https://admin.xdbin.com",
   "theme": {
     "primary-color": "#1DA57A"

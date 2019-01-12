@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Wrapper from '../_Wrapper';
 import moment from 'moment';
-import { Card, Icon, Popover, Modal, Button, Collapse, message } from 'antd';
+import { Card, Icon, Popover, Modal, Button, message, Pagination } from 'antd';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { fetchVideos, deleteVideo } from '../../api/VideoReq';
 import PublishVideoModal from '../../containers/ext/PublishVideoModal';
@@ -10,15 +10,6 @@ import './style/Video.less';
 
 const confirm = Modal.confirm;
 const { Meta } = Card;
-const { Panel } = Collapse;
-
-const customPanelStyle = {
-    background: '#f7f7f7',
-    borderRadius: 4,
-    marginBottom: 24,
-    border: 0,
-    overflow: 'hidden',
-};
 
 class Video extends Component {
     state = {
@@ -33,13 +24,13 @@ class Video extends Component {
         source: ''
     };
 
-    reqVideo = () => {
-        const { pageNo, pageSize } = this.state;
+    reqVideo = (pageNo, pageSize) => {
         fetchVideos(pageNo, pageSize)
             .then((res) => {
                 const { content, last, number, totalElements } = res;
                 this.setState({
                     pageNo: number + 1,
+                    pageSize,
                     videos: content,
                     last,
                     total: totalElements
@@ -93,12 +84,17 @@ class Video extends Component {
         });
     };
 
+    handleChangePage = (pageNo, pageSize) => {
+        this.reqVideo(pageNo, pageSize);
+    };
+
     async componentDidMount() {
-        this.reqVideo();
+        const { pageNo, pageSize } = this.state;
+        this.reqVideo(pageNo, pageSize);
     }
 
     render() {
-        const { videos, visible, source } = this.state;
+        const { videos, visible, source, pageNo, pageSize, total } = this.state;
         return (
             <Card>
                 <div style={{ margin: '1rem' }}>
@@ -131,6 +127,9 @@ class Video extends Component {
                                 </Col>
                             ))
                         }
+                    </Row>
+                    <Row>
+                        <Pagination showTotal={total => `共 ${total} 个`} defaultCurrent={pageNo} defaultPageSize={pageSize} total={total} onChange={this.handleChangePage} />
                     </Row>
                 </Grid>
                 <Modal
