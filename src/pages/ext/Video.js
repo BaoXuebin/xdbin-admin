@@ -6,6 +6,8 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { fetchVideos, deleteVideo } from '../../api/VideoReq';
 import PublishVideoModal from '../../containers/ext/PublishVideoModal';
 
+import './style/Video.less';
+
 const confirm = Modal.confirm;
 const { Meta } = Card;
 const { Panel } = Collapse;
@@ -103,10 +105,6 @@ class Video extends Component {
                     <div style={{ marginBottom: '1rem', textAlign: 'right' }}>
                         <Button type="primary" icon="video-camera" onClick={this.handleOpenPublishModal}>发布新短片</Button>
                     </div>
-                    <Collapse bordered={false}>
-                        <Panel header="更多查询条件 [+]" key="1" style={customPanelStyle}>
-                        </Panel>
-                    </Collapse>
                 </div>
                 <Grid fluid>
                     <Row>
@@ -116,7 +114,7 @@ class Video extends Component {
                                     <Card
                                         hoverable
                                         style={{ width: 240 }}
-                                        cover={<img alt="example" src={video.image} onClick={() => { this.handleOpenPlayer(video.source); }} />}
+                                        cover={<img className="cover" alt="example" src={video.image} onClick={() => { this.handleOpenPlayer(video.source); }} />}
                                         actions={[
                                             <Popover content={video.introduction} title={moment(video.uploadTime).fromNow()}>
                                                 <Icon type="info-circle" />
