@@ -1,15 +1,15 @@
 export default [
+    // {
+    //     key: '1',
+    //     icon: 'home',
+    //     content: '主页',
+    //     link: '/home'
+    // },
     {
-        key: '1',
-        icon: 'home',
-        content: '主页',
-        link: '/home'
-    },
-    {
-        key: 'article',
+        key: 'blog',
         icon: 'book',
-        content: '文章管理',
-        link: '/article'
+        content: '博客管理',
+        link: '/blog'
     },
     {
         key: 'tag',
@@ -28,6 +28,11 @@ export default [
         icon: 'appstore',
         content: '更多应用',
         subMenu: [
+            {
+                key: 'ext/book',
+                content: '我的书籍',
+                link: '/ext/book'
+            },
             {
                 key: 'ext/video',
                 content: '短片管理',

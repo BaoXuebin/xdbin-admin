@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Timeline } from 'antd';
+import { Card, Timeline, Pagination } from 'antd';
 
 import Wrapper from './_Wrapper';
 import { fetchAllComment, saveComment, deleteComment } from '../api/CommentReq';
@@ -11,6 +11,7 @@ class Comment extends Component {
         comments: [],
         pageNo: 1,
         total: 0,
+        pageSize: 10,
         last: false,
         loading: false
     };
@@ -32,11 +33,15 @@ class Comment extends Component {
                 });
             })
             .catch((error) => { console.error(error); });
-    }; 
+    };
 
-    async componentDidMount() {
+    handleChangePage = (pageNo, pageSize) => {
+        this.handleFetchComments(pageNo, pageSize);
+    };
+
+    handleFetchComments(pageNo, pageSize) {
         this.setState({ loading: true });
-        await fetchAllComment(this.state.pageNo)
+        fetchAllComment(pageNo)
             .then((result) => {
                 const { content, pageNo, total, last } = result;
                 this.setState({
@@ -50,8 +55,12 @@ class Comment extends Component {
             .finally(() => { this.setState({ loading: false }); });
     }
 
+    componentDidMount() {
+        this.handleFetchComments(this.state.pageNo);
+    }
+
     render() {
-        const { comments, loading } = this.state;
+        const { comments, loading, total, pageNo, pageSize } = this.state;
         return (
             <Card>
                 {
@@ -66,6 +75,7 @@ class Comment extends Component {
                         )
                     }
                 </Timeline>
+                <Pagination showTotal={total => `共 ${total} 条`} defaultCurrent={pageNo} defaultPageSize={pageSize} total={total} onChange={this.handleChangePage} />
             </Card>
         );
     }

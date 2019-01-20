@@ -13,8 +13,8 @@ const Home = Loadable({
     loader: () => import('./Home'),
     loading: Loader
 });
-const Article = Loadable({
-    loader: () => import('./Article'),
+const Blog = Loadable({
+    loader: () => import('./Blog'),
     loading: Loader
 });
 const Tag = Loadable({
@@ -33,6 +33,14 @@ const Mood = Loadable({
     loader: () => import('./ext/Mood'),
     loading: Loader
 });
+const Book = Loadable({
+    loader: () => import('./ext/Book'),
+    loading: Loader
+});
+const BookDetail = Loadable({
+    loader: () => import('./ext/book/Detail'),
+    loading: Loader
+});
 const NoFound = Loadable({
     loader: () => import('./404'),
     loading: Loader
@@ -44,11 +52,13 @@ const RouteMap = () => (
             <Route path="/login" component={Login} />   
             <AuthRoute exact path="/" component={Home} />
             <AuthRoute path="/home" component={Home} />
-            <AuthRoute path="/article" component={Article} />
+            <AuthRoute path="/blog" component={Blog} />
             <AuthRoute path="/tag" component={Tag} />
             <AuthRoute path="/comment" component={Comment} />
             <AuthRoute path="/ext/video" component={Video} />
             <AuthRoute path="/ext/mood" component={Mood} />
+            <AuthRoute exact path="/ext/book" component={Book} />
+            <AuthRoute path="/ext/book/:bookId" component={BookDetail} />
             <AuthRoute component={NoFound} />
         </Switch>
     </React.Fragment>

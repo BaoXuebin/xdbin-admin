@@ -12,6 +12,19 @@ export const reload = (url) => {
     }
 };
 
+export const flatCondition = (condition) => {
+    let result = '';
+    if (!condition) return result;
+    for (let key in condition) {
+        if (result === '') {
+            result += `${key}=${condition[key]}`;
+        } else {
+            result += `&${key}=${condition[key]}`;
+        }
+    }
+    return result;
+};
+
 export const fetch = (url, headers) => {
     let _headers = headers;
     // 默认 header

@@ -2,7 +2,7 @@
   "name": "xdbin-admin",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
+  "proxy": "https://xdbin.com",
   "homepage": "https://admin.xdbin.com",
   "theme": {
     "primary-color": "#1DA57A"
@@ -10,8 +10,10 @@
   "dependencies": {
     "antd": "^3.11.2",
     "moment": "^2.22.2",
+    "qiniu-js": "^2.5.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-flexbox-grid": "^2.1.2",
     "react-loadable": "^5.4.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",

@@ -1,5 +1,6 @@
 export const CommonActionTypes = {
     INIT_MATCH_PATH: 'INIT_MATCH_PATH',
+    SET_BREADCRUME: 'SET_BREADCRUME',
     INIT_SLIDER_STATUS: 'INIT_SLIDER_STATUS',
     TOGGLE_SLIDER_STATUS: 'TOGGLE_SLIDER_STATUS',
     LOGIN: 'LOGIN'
@@ -26,4 +27,10 @@ export const toggleSliderStatus = () => ({
 export const initUser = user => ({
     type: CommonActionTypes.LOGIN,
     user
+});
+
+// 更新面包屑
+export const setBreadcrumbName = breadcrumbName => ({
+    type: CommonActionTypes.SET_BREADCRUME,
+    breadcrumbName
 });
