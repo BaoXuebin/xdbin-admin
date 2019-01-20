@@ -1,15 +1,15 @@
 export default [
+    // {
+    //     key: '1',
+    //     icon: 'home',
+    //     content: '主页',
+    //     link: '/home'
+    // },
     {
-        key: '1',
-        icon: 'home',
-        content: '主页',
-        link: '/home'
-    },
-    {
-        key: 'article',
+        key: 'blog',
         icon: 'book',
-        content: '文章管理',
-        link: '/article'
+        content: '博客管理',
+        link: '/blog'
     },
     {
         key: 'tag',

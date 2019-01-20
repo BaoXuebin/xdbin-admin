@@ -13,4 +13,4 @@ export const validateReq = () => fetch('/api/v1/validate', {
     headers: { 'Content-Type': 'application/json' }
 });
 
-export const fetchQiniuToken = () => fetch('/api/v1/qiniu/token');
+export const fetchQiniuToken = type => fetch(`/api/v1/qiniu/token?type=${type}`);

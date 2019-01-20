@@ -1,17 +1,4 @@
-import { fetch } from './Req';
-
-const flatCondition = (condition) => {
-    let result = '';
-    if (!condition) return result;
-    for (let key in condition) {
-        if (result === '') {
-            result += `${key}=${condition[key]}`;
-        } else {
-            result += `&${key}=${condition[key]}`;
-        }
-    }
-    return result;
-};
+import { fetch, flatCondition } from './Req';
 
 export const fetchBookByISBN = isbn => fetch(`/api/v1/book/isbn/${isbn}`);
 export const fetchBooks = (condition) => fetch(`/api/v1/book/all?${flatCondition(condition)}`);

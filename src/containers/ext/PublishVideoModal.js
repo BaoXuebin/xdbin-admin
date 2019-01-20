@@ -97,24 +97,20 @@ class PublishVideoModal extends Component {
                         label="封面图片"
                     >
                         <Input placeholder="https://xxxx.com/xx.png" ref={(image) => { this.image = image; }} />
+                        <Uploader />
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label="视频地址"
                     >
                         <Input placeholder="https://xxxx.com/xx.mp4" ref={(source) => { this.source = source; }} />
+                        <Uploader type="video" />
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label="是否公开"
                     >
                         <Switch defaultChecked onChange={this.handleSwitch} />
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="上传组件"
-                    >
-                        <Uploader />
                     </FormItem>
                 </Form>
             </Modal>

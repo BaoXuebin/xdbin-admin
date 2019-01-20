@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const pathMap = {
     'home': '首页',
     'tag': '标签管理',
-    'article': '文章管理',
+    'blog': '博客管理',
     'comment': '留言管理',
     'video': '短片管理',
     'ext': '扩展',

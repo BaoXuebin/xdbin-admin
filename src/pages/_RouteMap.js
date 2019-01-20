@@ -13,8 +13,8 @@ const Home = Loadable({
     loader: () => import('./Home'),
     loading: Loader
 });
-const Article = Loadable({
-    loader: () => import('./Article'),
+const Blog = Loadable({
+    loader: () => import('./Blog'),
     loading: Loader
 });
 const Tag = Loadable({
@@ -52,7 +52,7 @@ const RouteMap = () => (
             <Route path="/login" component={Login} />   
             <AuthRoute exact path="/" component={Home} />
             <AuthRoute path="/home" component={Home} />
-            <AuthRoute path="/article" component={Article} />
+            <AuthRoute path="/blog" component={Blog} />
             <AuthRoute path="/tag" component={Tag} />
             <AuthRoute path="/comment" component={Comment} />
             <AuthRoute path="/ext/video" component={Video} />

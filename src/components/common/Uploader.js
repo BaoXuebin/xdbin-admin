@@ -32,7 +32,7 @@ class Uploader extends Component {
 
     handleUpload = () => {
         this.setState({ loading: true });
-        fetchQiniuToken()
+        fetchQiniuToken(this.props.type)
             .then((res) => {
                 const { key, token } = res;
                 const observable = qiniu.upload(
@@ -55,11 +55,12 @@ class Uploader extends Component {
 
     render() {
         const { filename, fileUrl, loading } = this.state;
+        const { type } = this.props;
         return (
             <div>
                 <input type="file" style={{ display: 'none' }} ref={(_file) => { this.fileInput = _file; }} onChange={this.handleChangeFile} />
                 <ButtonGroup>
-                    <Button type="primary" onClick={this.handleChooseFile}>{ filename || '选择文件' }</Button>
+                    <Button type="primary" icon={type === 'video' ? 'video-camera' : 'paper-clip'} onClick={this.handleChooseFile}>{ filename || (type === 'video' ? '选择视频文件' : '选择文件') }</Button>
                     <Button type="primary" icon="upload" onClick={this.handleUpload} disabled={filename === null} loading={loading} />
                 </ButtonGroup>
                 {
