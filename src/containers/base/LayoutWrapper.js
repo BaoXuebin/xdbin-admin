@@ -6,24 +6,24 @@ import { bindActionCreators } from 'redux';
 import '../styles/LayoutWrapper.css';
 import LayoutMenu from './LayoutMenu';
 import Breadcrumb from '../../components/common/Breadcrumb';
-import { toggleSliderStatus } from '../../redux/actions/CommonAction';
+import { toggleSliderStatus, logout } from '../../redux/actions/CommonAction';
 import Config from '../../config/Config';
+import { logoutReq } from '../../api/ManaReq';
 
 const { Header, Sider, Content, Footer } = Layout;
-
-const menu = (
-    <Menu>
-        <Menu.Item>
-            退出登录
-        </Menu.Item>
-    </Menu>
-);
   
-
 class LayoutWrapper extends Component {
     toggle = () => {
         this.props.toggleSliderStatus();
     }
+
+    handleLogout = () => {
+        logoutReq()
+            .then(() => {
+                this.props.logout();
+            })
+            .catch((e) => { console.error(e); });
+    };
 
     render() {
         const { user, collapsed } = this.props;
@@ -51,7 +51,13 @@ class LayoutWrapper extends Component {
                             </Col>
                             <Col span={12} style={{ textAlign: 'right', paddingRight: '2rem' }}>
                                 { user &&
-                                    <Dropdown overlay={menu}>
+                                    <Dropdown overlay={
+                                        <Menu>
+                                            <Menu.Item onClick={this.handleLogout}>
+                                                退出登录
+                                            </Menu.Item>
+                                        </Menu>
+                                    }>
                                         <span style={{ cursor: "pointer" }}>
                                             {user.userName} <Icon type="down" />
                                         </span>
@@ -82,7 +88,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    toggleSliderStatus: bindActionCreators(toggleSliderStatus, dispatch)
+    toggleSliderStatus: bindActionCreators(toggleSliderStatus, dispatch),
+    logout: bindActionCreators(logout, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(LayoutWrapper);

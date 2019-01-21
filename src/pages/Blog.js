@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Card, Table, Divider, Tag } from 'antd';
+import { Card, Table, Divider, Tag, message, Modal } from 'antd';
 
 import Wrapper from './_Wrapper';
-import { fetchBlogs } from '../api/BlogReq';
+import { fetchBlogs, hideBlogReq, showBlogReq, deleteBlogReq } from '../api/BlogReq';
 import TextButton from '../components/common/TextButton';
 
 import Config from '../config/Config';
-// const Config = require('../config/Config');
 
+const confirm = Modal.confirm;
 class Blog extends Component {
     columns = [
         {
@@ -51,7 +51,7 @@ class Blog extends Component {
             render: publishTime => <span>{moment(publishTime).format('YYYY.MM.DD HH:mm:ss')}</span>,
         },
         {
-            title: '是否公开',
+            title: '状态',
             dataIndex: 'pub',
             key: 'pub',
             width: 100,
@@ -60,17 +60,17 @@ class Blog extends Component {
         {
             title: 'Action',
             key: 'action',
+            width: 150,
             render: (text, record) => (
                 <span>
                     <TextButton content="修改" onClick={() => { console.log(`update: ${record.blogId}`); }} />
                     <Divider type="vertical" />
                     {
-                        record.pub ? <TextButton content="隐藏" onClick={() => { console.log(`hide: ${record.blogId}`); }} /> :
-                            <TextButton content="可见" onClick={() => { console.log(`show: ${record.blogId}`); }} />
+                        record.pub ? <TextButton content="隐藏" onClick={() => { this.handleReq(record.blogId, record.title); }} /> :
+                            <TextButton content="可见" onClick={() => { this.handleShowBlog(record.blogId, record.title); }} />
                     }
-                    
                     <Divider type="vertical" />
-                    <TextButton content="删除" color="#f50" onClick={() => { console.log(`delete: ${record.blogId}`); }} />
+                    <TextButton content="删除" color="#f50" onClick={() => { this.handleDeleteBlog(record.blogId, record.title); }} />
                 </span>
             ),
         }
@@ -106,6 +106,55 @@ class Blog extends Component {
     handleChangePagination = (pageNo, pageSize) => {
         this.handleFetchBlogs({ pageNo, pageSize });
     }
+
+    handleHideBlog = (blogId, title) => {
+        hideBlogReq(blogId)
+            .then((blog) => {
+                const { blogId } = blog;
+                const blogs = [...this.state.blogs];
+                blogs.filter(b => b.blogId === blogId)[0].pub = 0;
+                this.setState({ blogs });
+                message.success(`「${title}」设置为隐藏`);
+            })
+            .catch((e) => { console.error(e); });
+    };
+
+    handleShowBlog = (blogId, title) => {
+        showBlogReq(blogId)
+            .then((blog) => {
+                const { blogId } = blog;
+                const blogs = [...this.state.blogs];
+                blogs.filter(b => b.blogId === blogId)[0].pub = 1;
+                this.setState({ blogs });
+                message.success(`「${title}」设置为公开`);
+            })
+            .catch((e) => { console.error(e); });
+    };
+
+    handleDeleteBlog = (blogId, title) => {
+        const _this = this;
+        confirm({
+            title: `确定删除博客「${title}」?`,
+            okText: '删除',
+            okType: 'danger',
+            okButtonProps: {
+                disabled: false,
+            },
+            cancelText: '取消',
+            onOk() {
+                deleteBlogReq(blogId)
+                    .then((blog) => {
+                        const { blogId } = blog;
+                        let blogs = [..._this.state.blogs];
+                        blogs = blogs.filter(b => b.blogId !== blogId);
+                        _this.setState({ blogs });
+                        message.success(`「${title}」已删除`);
+                    })
+                    .catch((e) => { console.error(e); });
+            },
+            onCancel() {}
+        });
+    };
 
     handleMapDataSource = () => {
         return this.state.blogs.map(blog => ({

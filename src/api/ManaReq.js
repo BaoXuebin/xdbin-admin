@@ -8,6 +8,11 @@ export const loginReq = ({ username, password }) => fetch('/api/v1/login', {
     body: JSON.stringify({ username, password })
 });
 
+export const logoutReq = () => fetch('/api/v1/logout', {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' }
+});
+
 export const validateReq = () => fetch('/api/v1/validate', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' }
