@@ -3,7 +3,8 @@ export const CommonActionTypes = {
     SET_BREADCRUME: 'SET_BREADCRUME',
     INIT_SLIDER_STATUS: 'INIT_SLIDER_STATUS',
     TOGGLE_SLIDER_STATUS: 'TOGGLE_SLIDER_STATUS',
-    LOGIN: 'LOGIN'
+    LOGIN: 'LOGIN',
+    LOGOUT: 'LOGOUT'
 };
 
 // 初始化请求的路由信息
@@ -27,6 +28,10 @@ export const toggleSliderStatus = () => ({
 export const initUser = user => ({
     type: CommonActionTypes.LOGIN,
     user
+});
+
+export const logout = () => ({
+    type: CommonActionTypes.LOGOUT
 });
 
 // 更新面包屑

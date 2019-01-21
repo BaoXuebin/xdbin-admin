@@ -11,14 +11,22 @@ const initState = {
 
 const CommonReducer = (state = initState, action) => {
     switch (action.type) {
-        case CommonActionTypes.INIT_MATCH_PATH:
-            return { ...state, path: action.location.pathname, query: action.location.search };
+        case CommonActionTypes.INIT_MATCH_PATH: {
+            let path = action.location.pathname;
+            if (path === '/') {
+                path = '/blog';
+            }
+            return { ...state, path, query: action.location.search };
+        }
         case CommonActionTypes.TOGGLE_SLIDER_STATUS: {
             put('_collapsed', !state.collapsed);
             return { ...state, collapsed: !state.collapsed };
         }
         case CommonActionTypes.LOGIN: {
             return { ...state, user: action.user };
+        }
+        case CommonActionTypes.LOGOUT: {
+            return { ...state, user: null };
         }
         case CommonActionTypes.SET_BREADCRUME: {
             return { ...state, breadcrumbName: action.breadcrumbName };

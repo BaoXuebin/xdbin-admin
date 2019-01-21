@@ -10,10 +10,15 @@ import { loginReq, defaultHandleError } from '../api/ManaReq';
 const FormItem = Form.Item;
 
 class NormalLoginForm extends Component {
+    state = {
+        loading: false
+    };
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                this.setState({ loading: true });
                 const { userName, password } = values;
                 loginReq({ username: userName, password })
                     .then((res) => {
@@ -25,7 +30,8 @@ class NormalLoginForm extends Component {
                         this.props.initUser(res);
                         this.props.history.push('/');
                     })
-                    .catch(defaultHandleError);
+                    .catch(defaultHandleError)
+                    .finally(() => { this.setState({ loading: false }); });
             }
         });
     }
@@ -59,7 +65,7 @@ class NormalLoginForm extends Component {
                         </FormItem>
                         <FormItem>
                             <a className="login-form-forgot" href="">Forgot password</a>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
+                            <Button type="primary" htmlType="submit" loading={this.state.loading} className="login-form-button">
                                 Log in
                             </Button>
                             Or <a href="">register now!</a>

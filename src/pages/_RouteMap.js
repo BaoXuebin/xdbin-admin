@@ -50,7 +50,7 @@ const RouteMap = () => (
     <React.Fragment>
         <Switch>
             <Route path="/login" component={Login} />   
-            <AuthRoute exact path="/" component={Home} />
+            <AuthRoute exact path="/" component={Blog} />
             <AuthRoute path="/home" component={Home} />
             <AuthRoute path="/blog" component={Blog} />
             <AuthRoute path="/tag" component={Tag} />
