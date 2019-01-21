@@ -7,6 +7,7 @@ const pathMap = {
     'home': '首页',
     'tag': '标签管理',
     'blog': '博客管理',
+    'add': '发布新博客',
     'comment': '留言管理',
     'video': '短片管理',
     'ext': '扩展',

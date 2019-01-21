@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Layout, Icon, Col, Row, Menu, Dropdown } from 'antd';
+import { Layout, Icon, Col, Row, Menu, Dropdown, Button, Avatar } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 
 import '../styles/LayoutWrapper.css';
 import LayoutMenu from './LayoutMenu';
@@ -23,6 +24,10 @@ class LayoutWrapper extends Component {
                 this.props.logout();
             })
             .catch((e) => { console.error(e); });
+    };
+
+    handleNavigateAddBlog = () => {
+        this.props.history.push('/blog/add');
     };
 
     render() {
@@ -50,16 +55,23 @@ class LayoutWrapper extends Component {
                                 <span style={{ fontSize: '16px', fontWeight: 'bolder' }}>{Config.title}</span>
                             </Col>
                             <Col span={12} style={{ textAlign: 'right', paddingRight: '2rem' }}>
+                                <Link to={`/blog/add`}>
+                                    <Button type="primary" icon="plus" style={{ marginRight: '1rem' }}>博客</Button>
+                                </Link>
                                 { user &&
                                     <Dropdown overlay={
                                         <Menu>
-                                            <Menu.Item onClick={this.handleLogout}>
+                                            <Menu.Item key="1" disabled>
+                                                @{user.userName}
+                                            </Menu.Item>
+                                            <Menu.Divider />
+                                            <Menu.Item key="logout" onClick={this.handleLogout}>
                                                 退出登录
                                             </Menu.Item>
                                         </Menu>
                                     }>
                                         <span style={{ cursor: "pointer" }}>
-                                            {user.userName} <Icon type="down" />
+                                            <Avatar icon="user" src="http://cdn.xdbin.com/pics/20181120000045" /> <Icon type="down" color="#aaa" />
                                         </span>
                                     </Dropdown>
                                 }

@@ -17,6 +17,10 @@ const Blog = Loadable({
     loader: () => import('./Blog'),
     loading: Loader
 });
+const AddBlog = Loadable({
+    loader: () => import('./blog/Add'),
+    loading: Loader
+});
 const Tag = Loadable({
     loader: () => import('./Tag'),
     loading: Loader
@@ -51,14 +55,15 @@ const RouteMap = () => (
         <Switch>
             <Route path="/login" component={Login} />   
             <AuthRoute exact path="/" component={Blog} />
-            <AuthRoute path="/home" component={Home} />
-            <AuthRoute path="/blog" component={Blog} />
-            <AuthRoute path="/tag" component={Tag} />
-            <AuthRoute path="/comment" component={Comment} />
-            <AuthRoute path="/ext/video" component={Video} />
-            <AuthRoute path="/ext/mood" component={Mood} />
+            <AuthRoute exact path="/home" component={Home} />
+            <AuthRoute exact path="/blog" component={Blog} />
+            <AuthRoute exact path="/blog/add" component={AddBlog} />
+            <AuthRoute exact path="/tag" component={Tag} />
+            <AuthRoute exact path="/comment" component={Comment} />
+            <AuthRoute exact path="/ext/video" component={Video} />
+            <AuthRoute exact path="/ext/mood" component={Mood} />
             <AuthRoute exact path="/ext/book" component={Book} />
-            <AuthRoute path="/ext/book/:bookId" component={BookDetail} />
+            <AuthRoute exact path="/ext/book/:bookId" component={BookDetail} />
             <AuthRoute component={NoFound} />
         </Switch>
     </React.Fragment>
