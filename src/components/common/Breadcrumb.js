@@ -13,6 +13,7 @@ const pathMap = {
     'ext': '扩展',
     'mood': '时间轴',
     'book': '我的书籍',
+    'update': '修改'
 };
 
 const itemRender = (route, params, routes, paths) => {

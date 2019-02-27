@@ -2,13 +2,14 @@
   "name": "xdbin-admin",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
+  "proxy": "https://xdbin.com",
   "homepage": "https://admin.xdbin.com",
   "theme": {
     "primary-color": "#1DA57A"
   },
   "dependencies": {
     "antd": "^3.11.2",
+    "braft-editor": "^2.2.7",
     "moment": "^2.22.2",
     "qiniu-js": "^2.5.3",
     "react": "^16.4.1",

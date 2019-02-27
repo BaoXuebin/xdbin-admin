@@ -17,7 +17,7 @@ const Blog = Loadable({
     loader: () => import('./Blog'),
     loading: Loader
 });
-const AddBlog = Loadable({
+const AddOrUpdateBlog = Loadable({
     loader: () => import('./blog/Add'),
     loading: Loader
 });
@@ -57,7 +57,8 @@ const RouteMap = () => (
             <AuthRoute exact path="/" component={Blog} />
             <AuthRoute exact path="/home" component={Home} />
             <AuthRoute exact path="/blog" component={Blog} />
-            <AuthRoute exact path="/blog/add" component={AddBlog} />
+            <AuthRoute exact path="/blog/add" component={AddOrUpdateBlog} />
+            <AuthRoute exact path="/blog/:blogId" component={AddOrUpdateBlog} />
             <AuthRoute exact path="/tag" component={Tag} />
             <AuthRoute exact path="/comment" component={Comment} />
             <AuthRoute exact path="/ext/video" component={Video} />
