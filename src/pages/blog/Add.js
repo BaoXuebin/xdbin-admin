@@ -1,24 +1,27 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import _Wrapper from "../_Wrapper";
 import { Card, Input, Checkbox, message, Switch, Button } from "antd";
 
 import "./Add.css";
 import { fetchAllTagsReq } from "../../api/TagReq";
 import Uploader from "../../components/common/Uploader";
-import RichTextEditor from "../../components/common/RichTextEditor";
+import MultiTextEditor from "../../components/common/MultiTextEditor";
 import { saveBlogReq, fetchUpdateBlogByBlogId } from "../../api/BlogReq";
 
 const CheckboxGroup = Checkbox.Group;
 
-class Add extends Component {
+class AddOrUpdate extends PureComponent {
     state = {
         tagOptions: [],
         viewBlogId: "",
         viewTitle: "",
+        blogId: null,
         title: "",
         tags: [],
         pub: true,
+        summaryType: 1,
         summary: "",
+        contentType: 1,
         content: "",
         loading: false
     };
@@ -45,12 +48,12 @@ class Add extends Component {
         this.setState({ pub });
     };
 
-    handleSaveSummary = async summary => {
-        this.setState({ summary });
+    handleSaveSummary = async (type, summary) => {
+        this.setState({ summaryType: type, summary });
     };
 
-    handleSaveContent = async content => {
-        this.setState({ content });
+    handleSaveContent = async (type, content) => {
+        this.setState({ contentType: type, content });
     };
 
     handleReqTags = () => {
@@ -76,7 +79,6 @@ class Add extends Component {
                     pub: ifPub,
                     tags: tags.map(t => t.tagId)
                 }, () => { this.props.setBreadcrumbName(title); });
-                console.log(res);
             })
             .catch(() => { message.error('获取博客失败'); });
     };
@@ -92,7 +94,7 @@ class Add extends Component {
     };
 
     handlePublish = () => {
-        const { title, tags, pub, summary, content } = this.state;
+        const { blogId, title, tags, pub, summaryType, summary, contentType, content } = this.state;
         if (!title || !title.trim()) {
             message.error("标题不能为空");
             return;
@@ -104,13 +106,14 @@ class Add extends Component {
             return;
         }
         const blog = {
+            blogId,
             title,
             tags: tags.map(t => ({ tagId: t })),
             ifPub: pub,
             summary,
             content,
-            summaryType: 2,
-            contentType: 2
+            summaryType,
+            contentType
         };
         this.setState({ loading: true });
         saveBlogReq(blog)
@@ -138,6 +141,7 @@ class Add extends Component {
             summary,
             content,
             loading,
+            tags,
             viewBlogId,
             viewTitle
         } = this.state;
@@ -152,7 +156,7 @@ class Add extends Component {
                 <div className="item" style={{ maxWidth: "600px" }}>
                     <CheckboxGroup
                         options={tagOptions}
-                        defaultValue={[]}
+                        value={tags}
                         onChange={this.handleChangeTags}
                     />
                 </div>
@@ -168,14 +172,14 @@ class Add extends Component {
                     />
                 </div>
                 <div className="item">
-                    <RichTextEditor
+                    <MultiTextEditor
                         title="博客摘要"
                         value={summary}
                         onSave={this.handleSaveSummary}
                     />
                 </div>
                 <div className="item">
-                    <RichTextEditor
+                    <MultiTextEditor
                         title="博客内容"
                         value={content}
                         onSave={this.handleSaveContent}
@@ -208,4 +212,4 @@ class Add extends Component {
     }
 }
 
-export default _Wrapper(Add);
+export default _Wrapper(AddOrUpdate);

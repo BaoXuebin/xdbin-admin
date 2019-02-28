@@ -10,7 +10,10 @@
   "dependencies": {
     "antd": "^3.11.2",
     "braft-editor": "^2.2.7",
+    "braft-extensions": "^0.0.16",
+    "draft-js-prism": "^1.0.6",
     "moment": "^2.22.2",
+    "prismjs": "^1.15.0",
     "qiniu-js": "^2.5.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
